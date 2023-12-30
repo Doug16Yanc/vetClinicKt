@@ -168,7 +168,7 @@ class clientService {
                     removeRegistration(client)
                 }
                 4 -> {
-                    animalService.interactsAnimal(client)
+                    animalService.interactsAnimal(client, animalClients)
                 }
                 5 -> {
                     doFirstInteraction()
@@ -244,7 +244,10 @@ class clientService {
             interactsClient(client)
         }
         fun removeRegistration(client: Client){
-
+          /*  Utility.printMessage("REGISTRATION REMOVAL\n\n")
+            for (animal Animal in animalList){
+                if (animal.si)
+            }*/
         }
     }
 }
