@@ -26,6 +26,7 @@ class clientService {
             return animalClients
         }
         fun interactsFirstClient() {
+            sc.nextLine()
             Utility.printMessage("FIRST INTERACTION")
             println("Are you already registered in the system?\n Y/y - yes \n N/n - not\n\n")
             var option = sc.nextLine()
@@ -103,7 +104,7 @@ class clientService {
 
         }
         fun loginClient(){
-            var chances = 0
+            var chances = 3
             Utility.printMessage("CUSTOMER LOGIN")
             println("Enter your id :")
             var id = sc.nextInt()
@@ -128,10 +129,19 @@ class clientService {
                         break;
                     }
                     else{
+
+                        Utility.printMessage("Username or password not recognized. Chances = {$chances}")
                         chances--
-                        Utility.printMessage("Username or password not recognized. Chances = {${chances - 1}")
+                    }
+                    if (chances == 0){
+                        doFirstInteraction()
+                        break
                     }
                 } while (chances > 0)
+            }
+            else {
+                Utility.printMessage("Customer not found.\n")
+                doFirstInteraction()
             }
         }
         fun interactsClient(client: Client){
@@ -162,6 +172,7 @@ class clientService {
                 }
                 5 -> {
                     doFirstInteraction()
+
                 }
                 6 -> {
                     Utility.printMessage("\"It was a pleasure spending these simple\n" +
@@ -189,7 +200,48 @@ class clientService {
             }
         }
         fun changeData(client : Client){
-
+            Utility.printMessage("CHANGE DATA")
+            Utility.printMessage("Dearest, you´re allowed to change your address, " +
+                                "zip code, email, username and password.\n        ")
+            println("Select :\n" +
+                    "A/a - address :\n" +
+                    "Z/z - zip code :\n" +
+                    "E/e - email :\n" +
+                    "U/u - username :\n" +
+                    "P/p - password :\n")
+            var option = sc.nextLine()
+            when(option.lowercase(Locale.getDefault())){
+                "a" -> {
+                    println("New address:")
+                    val address = sc.nextLine()
+                    client.clientAddress = address
+                }
+                "z" -> {
+                    println("New zip code:")
+                    val zipcode = sc.nextInt()
+                    client.postalCode = zipcode
+                }
+                "e" -> {
+                    println("New email:")
+                    val email = sc.nextLine()
+                    client.clientEmail = email
+                }
+                "u" -> {
+                    println("New username:")
+                    val username = sc.nextLine()
+                    client.username = username
+                }
+                "p" -> {
+                    println("New password:")
+                    val password = sc.nextLine()
+                    client.password = password
+                }
+                else -> {
+                    Utility.printMessage("Sorry, however this option´s no-existent.\n")
+                    changeData(client)
+                }
+            }
+            interactsClient(client)
         }
         fun removeRegistration(client: Client){
 

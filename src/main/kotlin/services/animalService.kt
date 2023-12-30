@@ -1,6 +1,9 @@
 package services
 
+import entities.Animal
 import entities.Client
+import entities.Specie
+import enumerations.clientStatus
 import utils.Utility
 import java.util.*
 import kotlin.random.Random
@@ -66,6 +69,22 @@ class animalService {
         }
         fun recordAnimal(client: Client){
             Utility.printMessage("ANIMAL REGISTRATION OF ID CLIENT : ${client.clientId}")
+            var id = generateId()
+            println("Name of animal:")
+            var name = sc.nextLine()
+            println("Age:")
+            sc.nextLine()
+            var age = sc.nextInt()
+            println("Sex:")
+            var sex = sc.nextLine()
+            println("Specie:")
+            var specie = sc.nextLine()
+
+            client.status = clientStatus.ACTIVE
+
+            val animal = Animal(client, id, name, age, sex, Specie(specie))
+            clientService.animalClients.add(animal)
+
         }
         fun changeDataAnimal(){
 

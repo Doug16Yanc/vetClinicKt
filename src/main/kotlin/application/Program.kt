@@ -18,7 +18,7 @@ fun doFirstInteraction() {
                 "                   C/c - client                        \n" +
                 "                   O/o - Logout                        \n"
     )
-    var option = sc.nextLine()
+    var option = sc.next()
 
     when(option.lowercase(Locale.getDefault())){
         "v" -> {
@@ -34,7 +34,7 @@ fun doFirstInteraction() {
         }
         else -> {
             Utility.printMessage("Sorry, however this option´s no-existent.\n")
-            return
+            System.exit(0)
         }
     }
 }
