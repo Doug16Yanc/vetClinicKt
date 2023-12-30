@@ -1,6 +1,6 @@
 package services
 
-class Examination {
+class treatmentService {
     companion object{
 
     }

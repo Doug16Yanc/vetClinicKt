@@ -22,10 +22,10 @@ fun doFirstInteraction() {
 
     when(option.lowercase(Locale.getDefault())){
         "v" -> {
-            vetService.interactsVet()
+            vetService.loginVet()
         }
         "c" -> {
-            clientService.interactsClient()
+            clientService.interactsFirstClient()
         }
         "o" -> {
             Utility.printMessage("\"It was a pleasure spending these simple\n" +

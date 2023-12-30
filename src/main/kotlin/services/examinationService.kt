@@ -1,6 +1,6 @@
 package services
 
-class CheckUp {
+class examinationService {
     companion object{
 
     }
