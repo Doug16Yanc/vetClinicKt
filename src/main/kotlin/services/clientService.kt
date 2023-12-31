@@ -146,45 +146,59 @@ class clientService {
             }
         }
         fun interactsClient(client: Client){
-            Utility.printMessage("PAGE CUSTOMER\n\n" +
-                    "Welcome, dearest ${client.clientName}\n")
-            println("       CLIENT \n\n" +
-                    "    1 - Query your data\n" +
-                    "    2 - Change your data\n" +
-                    "    3 - Remove your registration\n" +
-                    "       ANIMAL      \n" +
-                    "    4 - Go to animal features\n\n" +
-                    "       SYSTEM MANAGEMENT   \n\n" +
-                    "    5 - Return to the top  \n" +
-                    "    6 - Logout             \n")
-                var option = sc.nextInt()
-            when(option){
-                1 -> {
-                    queryData(client)
-                }
-                2 -> {
-                    changeData(client)
-                }
-                3 -> {
-                    removeRegistration(client)
-                }
-                4 -> {
-                    animalService.interactsAnimal(client, animalClients)
-                }
-                5 -> {
-                    doFirstInteraction()
+           do {
+               Utility.printMessage(
+                   "PAGE CUSTOMER\n\n" +
+                           "Welcome, dearest ${client.clientName}\n"
+               )
+               println(
+                   "       CLIENT \n\n" +
+                           "    1 - Query your data\n" +
+                           "    2 - Change your data\n" +
+                           "    3 - Remove your registration\n" +
+                           "       ANIMAL      \n" +
+                           "    4 - Go to animal features\n\n" +
+                           "       SYSTEM MANAGEMENT   \n\n" +
+                           "    5 - Return to the top  \n" +
+                           "    6 - Logout             \n"
+               )
+               var option = sc.nextInt()
+               when (option) {
+                   1 -> {
+                       queryData(client)
+                   }
 
-                }
-                6 -> {
-                    Utility.printMessage("\"It was a pleasure spending these simple\n" +
-                            "moments with you, see you later!\n")
-                    System.exit(0)
-                }
-                else -> {
-                    Utility.printMessage("Sorry, however this option´s no existent.\n")
-                    interactsClient(client)
-                }
-            }
+                   2 -> {
+                       changeData(client)
+                   }
+
+                   3 -> {
+                       removeRegistration(client)
+                   }
+
+                   4 -> {
+                       animalService.interactsAnimal(client, animalClients)
+                   }
+
+                   5 -> {
+                       doFirstInteraction()
+                       break
+                   }
+
+                   6 -> {
+                       Utility.printMessage(
+                           "\"It was a pleasure spending these simple\n" +
+                                   "moments with you, see you later!\n"
+                       )
+                       System.exit(0)
+                   }
+
+                   else -> {
+                       Utility.printMessage("Sorry, however this option´s no existent.\n")
+                       interactsClient(client)
+                   }
+               }
+           } while(true)
 
         }
         fun queryData(client : Client){
@@ -242,7 +256,6 @@ class clientService {
                     changeData(client)
                 }
             }
-            interactsClient(client)
         }
         fun removeRegistration(client: Client){
             Utility.printMessage("REGISTRATION REMOVAL\n\n")

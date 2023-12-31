@@ -39,28 +39,38 @@ class vetService {
             } while(chances > 0)
         }
         fun interactsVet(vet: Vet){
-            Utility.printMessage("Welcome, dearest ${vet.vetName}\n")
-            println("           1 - Perform consultation    \n" +
-                    "           2 - Issue consultation report\n" +
-                    "           3 - Logout                  \n")
-            var option = sc.nextInt()
+            do {
+                Utility.printMessage("Welcome, dearest ${vet.vetName}\n")
+                println(
+                    "           1 - Perform consultation    \n" +
+                            "           2 - Issue consultation report\n" +
+                            "           3 - Logout                  \n"
+                )
+                var option = sc.nextInt()
 
-            when(option){
-                1 -> {
-                    checkUpService.consultations
+                when (option) {
+                    1 -> {
+                        checkUpService.consultations
+                    }
+
+                    2 -> {
+                        checkUpService.listConsultation()
+                    }
+
+                    3 -> {
+                        doFirstInteraction()
+                        break
+                    }
+
+                    else -> {
+                        Utility.printMessage(
+                            "Sorry, however this option´s no existent. " +
+                                    "The return to the beginning will be carried out\n"
+                        )
+                        doFirstInteraction()
+                    }
                 }
-                2 -> {
-                    checkUpService.listConsultation()
-                }
-                3 -> {
-                    doFirstInteraction()
-                }
-                else -> {
-                    Utility.printMessage("Sorry, however this option´s no existent. " +
-                                         "The return to the beginning will be carried out\n")
-                    doFirstInteraction()
-                }
-            }
+            } while(true)
         }
 
     }

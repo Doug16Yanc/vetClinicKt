@@ -82,7 +82,6 @@ class animalService {
                         clientService.interactsClient(client)
                         break
                     }
-
                     else -> {
                         Utility.printMessage("Sorry, however this option´s no-existent.\n")
                     }

@@ -1,5 +1,6 @@
 package application
 
+import services.animalService
 import services.clientService
 import services.vetService
 import utils.Utility
