@@ -3,6 +3,7 @@ package services
 import application.doFirstInteraction
 import entities.Animal
 import entities.Client
+import enumerations.animalSituation
 import enumerations.clientStatus
 import utils.Utility
 import java.time.LocalDateTime
@@ -244,10 +245,42 @@ class clientService {
             interactsClient(client)
         }
         fun removeRegistration(client: Client){
-          /*  Utility.printMessage("REGISTRATION REMOVAL\n\n")
-            for (animal Animal in animalList){
-                if (animal.si)
-            }*/
+            Utility.printMessage("REGISTRATION REMOVAL\n\n")
+            var validation = false
+            for (animal in animalClients) {
+                if (animal.status != animalSituation.HEALTHY || animal.status != animalSituation.CURED) {
+                    validation = true
+                }
+            }
+            if (validation){
+                Utility.printMessage("Sorry, request impossible to fulfill.\n")
+                println("Id \t Name \t Sex \t Status\n\n")
+                for (animal in clientService.animalClients) {
+                    println("${animal.animalId} - ${animal.animalName} - \n" +
+                            "${animal.animalSex} - ${animal.status}\n\n")
+                }
+                println("\n")
+            }
+            else {
+                var number = 2
+                var password : String
+                Utility.printMessage("Confirm your password:")
+                do{
+                    println("Password:")
+                    password = sc.nextLine()
+                    number--
+                } while (number > 0)
+                val correctPassword = clients.find {it.password == password}
+
+                if (correctPassword != null){
+                    Utility.printMessage("Removal successfully!\n")
+                    clients.remove(correctPassword)
+                }
+                else {
+                    println("Password not recognized.\n")
+                }
+            }
+
         }
     }
 }

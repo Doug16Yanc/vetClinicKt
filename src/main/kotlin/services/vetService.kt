@@ -47,7 +47,7 @@ class vetService {
 
             when(option){
                 1 -> {
-                    checkUpService
+                    checkUpService.consultations
                 }
                 2 -> {
                     checkUpService.listConsultation()

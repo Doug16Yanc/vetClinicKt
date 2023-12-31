@@ -4,5 +4,6 @@ enum class animalSituation {
     STABLE,
     SERIOUS,
     CURED,
-    SUSPECT
+    SUSPECT,
+    HEALTHY
 }

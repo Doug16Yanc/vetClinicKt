@@ -1,6 +1,7 @@
 package entities
 
 import enumerations.animalSex
+import enumerations.animalSituation
 
 data class Animal(
     val client: Client,
@@ -8,5 +9,6 @@ data class Animal(
     var animalName : String,
     var animalAge : Int,
     var animalSex : animalSex,
-    var animalSpecie : Specie
+    var animalSpecie : Specie,
+    var status : animalSituation
 );
