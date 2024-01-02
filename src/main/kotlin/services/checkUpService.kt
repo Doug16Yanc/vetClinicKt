@@ -3,21 +3,24 @@ package services
 import entities.Animal
 import entities.CheckUp
 import entities.Client
+import entities.Examination
 import enumerations.CheckupStatus
 import repositories.Calculate
 import utils.Utility
 
 import java.util.*
+import kotlin.collections.ArrayList
 
 class CheckUpService {
     companion object : Calculate{
         val sc = Scanner(System.`in`)
         val consultations : MutableList<Animal> = ArrayList()
+        val consultPay : MutableList<CheckUp> = ArrayList()
         fun getCheckUp(): MutableList<Animal> {
             return consultations
         }
         fun performCheckUp(client : Client, animal: MutableList<Animal>){
-
+            var value = doCalculation()
             Utility.printMessage("CONSULTATION\n\n" +
                     "Dearest ${client.clientName}, depending on the case you suspect, mark the\n" +
                     "check up as an emergency and your pet will enter the priority queue.\n")
@@ -28,7 +31,7 @@ class CheckUpService {
 
             val foundAnimal = ClientService.animalClients.find {it.animalId == id}
 
-            if (foundAnimal != null) {
+            if (foundAnimal != null && foundAnimal.client == client) {
                 sc.nextLine()
                 println("Status check up:\n E/e - Emergency\n C/c - Conventional\n")
                 var option = sc.nextLine()
@@ -41,6 +44,8 @@ class CheckUpService {
                                             "referred to emergency.\n")
                         val checkUp = CheckUp(0.0, CheckupStatus.EMERGENCY)
 
+                        val consult = CheckUp(value, CheckupStatus.EMERGENCY)
+                        consultPay.add(consult)
                     }
 
                     "c" -> {
@@ -49,9 +54,9 @@ class CheckUpService {
                                             "${foundAnimal.animalName} was " +
                                             "referred to conventional chech up.\n")
                         val checkUp = CheckUp(0.0, CheckupStatus.CONVENTIONAL)
-
+                        val consult = CheckUp(value, CheckupStatus.CONVENTIONAL)
+                        consultPay.add(consult)
                     }
-
                     else -> {
                         Utility.printMessage("Sorry, however this option's no-existent.\n")
                     }
@@ -62,7 +67,7 @@ class CheckUpService {
             }
 
         }
-        fun listConsultation(){
+        fun listConsultation(checkUp: CheckUp){
             Utility.printMessage("CONSULTATIONS FILE")
             for (consult in consultations){
                 Utility.printMessage("> Id of client : ${consult.client.clientId}\n" +
@@ -77,30 +82,33 @@ class CheckUpService {
                         "           > Sex of animal : ${consult.animalSex}\n" +
                         "           > Specie of animal : ${consult.animalSpecie.specieName}\n" +
                         "           CHECK UP DATA       \n\n" +
-                        "           > Check up status : ${consult.status}\n\n")
+                        "           > Check up status : ${checkUp.status}\n\n")
+
             }
-            doCheckUp(consultations)
+            doCheckUp(consultations, checkUp, examination = Examination("", 0.0))
         }
-        fun doCheckUp(consultations : MutableList<Animal>){
+        fun doCheckUp(consultations : MutableList<Animal>, checkUp : CheckUp, examination: Examination){
             if(consultations.isNotEmpty()){
                 val firstAnimal = consultations.removeAt(0)
-                processCheckUp(firstAnimal)
+                processCheckUp(firstAnimal, checkUp, examination)
             }
             else {
                 Utility.printMessage("No animal in the consultations queue.\n")
             }
+
         }
-        fun processCheckUp(animal : Animal){
+        fun processCheckUp(animal : Animal,  checkUp : CheckUp, examination : Examination){
+
             Utility.printMessage("PROCESS CHECK UP")
             println("Examinations?\n Y/y - Yes\n N/n - Not\n\n")
             var optionExamination = sc.nextLine()
 
             when(optionExamination.lowercase(Locale.getDefault())){
-                "c" -> {
+                "y" -> {
                     ExaminationService.doExamination()
                 }
-                "h" -> {
-                    TreatmentService.defineTreatment(animal)
+                "n" -> {
+                    TreatmentService.defineTreatment(animal, checkUp, examination)
                 }
                 else -> {
                     Utility.printMessage("Sorry, however this option's no existent.\n")
@@ -113,6 +121,4 @@ class CheckUpService {
             return value
         }
     }
-
-
 }

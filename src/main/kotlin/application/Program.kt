@@ -1,5 +1,9 @@
 package application
 
+import entities.CheckUp
+import entities.Examination
+import enumerations.CheckupStatus
+import services.CheckUpService
 import services.ClientService
 import services.VetService
 import utils.Utility
@@ -20,9 +24,12 @@ fun doFirstInteraction() {
     )
     var option = sc.next()
 
+
     when(option.lowercase(Locale.getDefault())){
         "v" -> {
-            VetService.loginVet()
+            val checkUp = CheckUp(0.0, CheckupStatus.CONVENTIONAL)
+            val examination = Examination("", 0.0)
+            VetService.loginVet(checkUp, examination)
         }
         "c" -> {
             ClientService.interactsFirstClient()
