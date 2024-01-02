@@ -16,12 +16,17 @@ class PaymentService {
         val currentDateTime = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         val formattedDateTime = currentDateTime.format(formatter)
-        fun doPayment(animal : Animal, checkUp : CheckUp, examination : Examination, treatment : Treatment) {
+        fun doPayment(animal : Animal, checkUp : CheckUp, examination : Examination, treatment: Treatment, quantity : Int) {
+            var valueCheck = CheckUpService.doCalculation(1)
+            checkUp.value = valueCheck
+            var valueExamination = ExaminationService.doCalculation(quantity)
+            examination.value = valueExamination
             var sumExpenditure: Double = 0.0
             Utility.printMessage("PAYMENT EXPENDITURES")
-            println("Check up  value : US$ ${checkUp.value}\n\n")
-            println("Examination(s) value : US$ ${examination.value}\n")
-            sumExpenditure = checkUp.value + examination.value
+            println("Check up  value : US$ ${valueCheck}\n\n")
+            println("Examination(s) value : US$ ${valueExamination}\n")
+            sumExpenditure = valueCheck + valueExamination
+            println("Total expenditure: US$ ${sumExpenditure}\n")
             println("Payment method:\n\n M/m - money\n C/c - card \n B/b - bank transfer\n\n")
             var method = sc.nextLine()
             when (method.lowercase(Locale.getDefault())) {

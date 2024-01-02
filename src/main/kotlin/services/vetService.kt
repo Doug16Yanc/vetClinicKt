@@ -3,7 +3,9 @@ package services
 import application.doFirstInteraction
 import entities.CheckUp
 import entities.Examination
+import entities.Treatment
 import entities.Vet
+import enumerations.TreatmentType
 import utils.Utility
 import java.util.*
 import kotlin.collections.ArrayList
@@ -42,16 +44,17 @@ class VetService {
         }
         fun interactsVet(vet: Vet, checkUp : CheckUp, examination : Examination){
             do {
+                val treatment = Treatment("", TreatmentType.CLINICAL)
                 Utility.printMessage("Welcome, dearest ${vet.vetName}\n")
                 println(    "           1 - Perform consultation    \n" +
-                            "           2 - Issue consultation report\n" +
+                            "           2 - List check up\n" +
                             "           3 - Logout                  \n"
                 )
                 var option = sc.nextInt()
 
                 when (option) {
                     1 -> {
-                        CheckUpService.doCheckUp(ClientService.animalClients, checkUp, examination)
+                        CheckUpService.doCheckUp(ClientService.animalClients, checkUp, examination, treatment)
                     }
 
                     2 -> {

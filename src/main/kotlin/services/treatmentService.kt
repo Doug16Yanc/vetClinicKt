@@ -28,23 +28,23 @@ class TreatmentService {
             }
         }
         fun doClinicalTreatment(animal : Animal,  checkUp : CheckUp, examination : Examination){
-            Utility.printMessage("The description of clinical treatment:\n")
+            Utility.printMessage("The description of the clinical treatment:\n")
             var description = sc.nextLine()
             Utility.printMessage("This documentation proof the treatment of the animal thus described of the\n" +
                                 "animal named ${animal.animalName}, ${animal.animalId}, belonging to client by\n" +
                                 "name ${animal.client.clientName}, id : ${animal.client.clientId}")
             val treatment = Treatment(description, TreatmentType.CLINICAL)
-            PaymentService.doPayment(animal, checkUp, examination, treatment)
+            PaymentService.doPayment(animal, checkUp, examination, treatment, 1)
         }
         fun doHomeTreatment(animal : Animal, checkUp : CheckUp, examination : Examination){
             TreatmentType.HOME
-            Utility.printMessage("The description of home treatment:\n")
+            Utility.printMessage("The description of the home treatment:\n")
             var description = sc.nextLine()
             Utility.printMessage("This documentation proof the treatment of the animal thus described of the\n" +
                     "animal named ${animal.animalName}, ${animal.animalId}, belonging to client by\n" +
                     "name ${animal.client.clientName}, id : ${animal.client.clientId}")
             val treatment = Treatment(description, TreatmentType.HOME)
-            PaymentService.doPayment(animal, checkUp, examination, treatment)
+            PaymentService.doPayment(animal, checkUp, examination, treatment, 1)
         }
 
     }
