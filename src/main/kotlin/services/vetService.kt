@@ -6,7 +6,7 @@ import utils.Utility
 import java.util.*
 import kotlin.collections.ArrayList
 
-class vetService {
+class VetService {
     companion object{
         val sc = Scanner(System.`in`);
         val vets : MutableList<Vet> = ArrayList()
@@ -41,8 +41,7 @@ class vetService {
         fun interactsVet(vet: Vet){
             do {
                 Utility.printMessage("Welcome, dearest ${vet.vetName}\n")
-                println(
-                    "           1 - Perform consultation    \n" +
+                println(    "           1 - Perform consultation    \n" +
                             "           2 - Issue consultation report\n" +
                             "           3 - Logout                  \n"
                 )
@@ -50,11 +49,11 @@ class vetService {
 
                 when (option) {
                     1 -> {
-                        checkUpService.consultations
+                        CheckUpService.doCheckUp(ClientService.animalClients)
                     }
 
                     2 -> {
-                        checkUpService.listConsultation()
+                        CheckUpService.listConsultation()
                     }
 
                     3 -> {

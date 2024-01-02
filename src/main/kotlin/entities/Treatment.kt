@@ -1,8 +1,8 @@
 package entities
 
-import enumerations.treatmentType
+import enumerations.TreatmentType
 
 data class Treatment (
     var descriptionTreatment: String,
-    var treatmentType : treatmentType
+    var treatmentType : TreatmentType
 );

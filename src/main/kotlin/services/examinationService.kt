@@ -1,15 +1,30 @@
 package services
 
+import entities.Examination
+import repositories.Calculate
 import utils.Utility
 import java.util.*
 
-class examinationService {
-    companion object{
+class ExaminationService {
+    companion object : Calculate {
         val sc = Scanner(System.`in`)
+        val exams : MutableList<Examination> = ArrayList()
+        fun getExams() : MutableList<Examination>{
+            return exams
+        }
         fun doExamination(){
             Utility.printMessage("EXAMINATION PAGE")
             println("Description of this examination:")
-            var examination = sc.nextLine()
+            var examDescription = sc.nextLine()
+            var value = doCalculation()
+            val examination = Examination(examDescription, value)
+            exams.add(examination);
         }
+        override fun doCalculation(): Double {
+            var value = 0.0
+            value += 150.00
+            return value
+        }
+
     }
 }

@@ -1,6 +1,6 @@
 package enumerations
 
-enum class treatmentType {
+enum class TreatmentType {
     CLINICAL,
     HOME
 }

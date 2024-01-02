@@ -1,6 +1,6 @@
 package entities
 
-import enumerations.clientStatus
+import enumerations.ClientStatus
 
 data class Client(
     var clientId : Int,
@@ -10,5 +10,5 @@ data class Client(
     var postalCode : Int,
     var username : String,
     var password : String,
-    var status : clientStatus
+    var status : ClientStatus
 );

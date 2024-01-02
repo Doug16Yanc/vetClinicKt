@@ -1,8 +1,7 @@
 package application
 
-import services.animalService
-import services.clientService
-import services.vetService
+import services.ClientService
+import services.VetService
 import utils.Utility
 import java.util.*
 
@@ -23,10 +22,10 @@ fun doFirstInteraction() {
 
     when(option.lowercase(Locale.getDefault())){
         "v" -> {
-            vetService.loginVet()
+            VetService.loginVet()
         }
         "c" -> {
-            clientService.interactsFirstClient()
+            ClientService.interactsFirstClient()
         }
         "o" -> {
             Utility.printMessage("\"It was a pleasure spending these simple\n" +

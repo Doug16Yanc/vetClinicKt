@@ -1,46 +1,45 @@
 package services
 
 import entities.Animal
-import enumerations.treatmentType
+import enumerations.TreatmentType
 import utils.Utility
 import java.util.*
 
-class treatmentService {
+class TreatmentService {
     companion object{
         val sc = Scanner(System.`in`)
-        fun doClinicalTreatment(animal : Animal){
-            treatmentType.CLINICAL
-            println("Examinations?\n Y/y - yes\n\n N/n - not")
-            var answer = sc.nextLine()
-
-            when(answer.lowercase(Locale.getDefault())){
-                "y" -> {
-                    examinationService.doExamination()
+        fun defineTreatment(animal: Animal){
+            Utility.printMessage("TREATMENT DEFINITION")
+            println("Treatment type:\n C/c - Clinical\n\n H/h - Home\n\n")
+            var optionTreament = sc.nextLine()
+            when(optionTreament.lowercase(Locale.getDefault())){
+                "c" -> {
+                    doClinicalTreatment(animal)
                 }
-                "n" -> {
-
+                "h" -> {
+                    doHomeTreatment(animal)
                 }
                 else -> {
-                    Utility.printMessage("Sorry, however this option´s no-existent.\n")
+                    Utility.printMessage("Sorry, however this option´s no existent.\n")
                 }
             }
         }
+        fun doClinicalTreatment(animal : Animal){
+            TreatmentType.CLINICAL
+            Utility.printMessage("The description of clinical treatment:\n")
+            var description = sc.nextLine()
+            Utility.printMessage("This documentation proof the treatment of the animal thus described of the\n" +
+                                "animal named ${animal.animalName}, ${animal.animalId}, belonging to client by\n" +
+                                "name ${animal.client.clientName}, id : ${animal.client.clientId}")
+
+        }
         fun doHomeTreatment(animal : Animal){
-            treatmentType.HOME
-            println("Examinations?\n Y/y - yes\n\n N/n - not")
-            var answer = sc.nextLine()
-
-            when(answer.lowercase(Locale.getDefault())){
-                "y" -> {
-                    examinationService.doExamination()
-                }
-                "n" -> {
-
-                }
-                else -> {
-                    Utility.printMessage("Sorry, however this option´s no-existent.\n")
-                }
-            }
+            TreatmentType.HOME
+            Utility.printMessage("The description of home treatment:\n")
+            var description = sc.nextLine()
+            Utility.printMessage("This documentation proof the treatment of the animal thus described of the\n" +
+                    "animal named ${animal.animalName}, ${animal.animalId}, belonging to client by\n" +
+                    "name ${animal.client.clientName}, id : ${animal.client.clientId}")
         }
     }
 }

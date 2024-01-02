@@ -1,6 +1,6 @@
 package enumerations
 
-enum class animalSex {
+enum class AnimalSex {
     MALE,
     FEMALE,
     NO_IDENTIFICATION

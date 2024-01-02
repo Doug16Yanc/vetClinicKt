@@ -3,13 +3,14 @@ package services
 import entities.Animal
 import entities.CheckUp
 import entities.Client
-import enumerations.checkupStatus
+import enumerations.CheckupStatus
+import repositories.Calculate
 import utils.Utility
 
 import java.util.*
 
-class checkUpService {
-    companion object{
+class CheckUpService {
+    companion object : Calculate{
         val sc = Scanner(System.`in`)
         val consultations : MutableList<Animal> = ArrayList()
         fun getCheckUp(): MutableList<Animal> {
@@ -25,7 +26,7 @@ class checkUpService {
             var id = sc.nextInt()
 
 
-            val foundAnimal = clientService.animalClients.find {it.animalId == id}
+            val foundAnimal = ClientService.animalClients.find {it.animalId == id}
 
             if (foundAnimal != null) {
                 sc.nextLine()
@@ -38,7 +39,7 @@ class checkUpService {
                         Utility.printMessage("The animal, ${foundAnimal.animalId}, " +
                                             "${foundAnimal.animalName} was " +
                                             "referred to emergency.\n")
-                        val checkUp = CheckUp(0.0, checkupStatus.EMERGENCY)
+                        val checkUp = CheckUp(0.0, CheckupStatus.EMERGENCY)
 
                     }
 
@@ -47,7 +48,7 @@ class checkUpService {
                         Utility.printMessage("The animal, ${foundAnimal.animalId}, " +
                                             "${foundAnimal.animalName} was " +
                                             "referred to conventional chech up.\n")
-                        val checkUp = CheckUp(0.0, checkupStatus.CONVENTIONAL)
+                        val checkUp = CheckUp(0.0, CheckupStatus.CONVENTIONAL)
 
                     }
 
@@ -64,7 +65,7 @@ class checkUpService {
         fun listConsultation(){
             Utility.printMessage("CONSULTATIONS FILE")
             for (consult in consultations){
-                Utility.printMessage( "     > Id of client : ${consult.client.clientId}\n" +
+                Utility.printMessage("> Id of client : ${consult.client.clientId}\n" +
                         "           > Name of client : ${consult.client.clientName}\n" +
                         "           > Address : ${consult.client.clientAddress}\n" +
                         "           > Postal code : ${consult.client.postalCode}\n" +
@@ -81,7 +82,7 @@ class checkUpService {
             doCheckUp(consultations)
         }
         fun doCheckUp(consultations : MutableList<Animal>){
-            if(consultations.isEmpty()){
+            if(consultations.isNotEmpty()){
                 val firstAnimal = consultations.removeAt(0)
                 processCheckUp(firstAnimal)
             }
@@ -91,20 +92,27 @@ class checkUpService {
         }
         fun processCheckUp(animal : Animal){
             Utility.printMessage("PROCESS CHECK UP")
-            println("Treatment type:\n C/c - Clinical\n H/h - Home\n\n")
-            var optionTreatment = sc.nextLine()
+            println("Examinations?\n Y/y - Yes\n N/n - Not\n\n")
+            var optionExamination = sc.nextLine()
 
-            when(optionTreatment.lowercase(Locale.getDefault())){
+            when(optionExamination.lowercase(Locale.getDefault())){
                 "c" -> {
-                    treatmentService.doClinicalTreatment(animal)
+                    ExaminationService.doExamination()
                 }
                 "h" -> {
-                    treatmentService.doHomeTreatment(animal)
+                    TreatmentService.defineTreatment(animal)
                 }
                 else -> {
                     Utility.printMessage("Sorry, however this option's no existent.\n")
                 }
             }
         }
+        override fun doCalculation(): Double {
+            var value = 0.0
+            value += 250.00
+            return value
+        }
     }
+
+
 }

@@ -3,8 +3,8 @@ package services
 import application.doFirstInteraction
 import entities.Animal
 import entities.Client
-import enumerations.animalSituation
-import enumerations.clientStatus
+import enumerations.AnimalSituation
+import enumerations.ClientStatus
 import utils.Utility
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -12,7 +12,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 
-class clientService {
+class ClientService {
     companion object{
         val currentDateTime = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
@@ -83,7 +83,7 @@ class clientService {
             println("Password to login in system:")
             var password = sc.nextLine()
 
-            val client = Client(id, name, address, email, postalcode, username, password, clientStatus.REGISTERED)
+            val client = Client(id, name, address, email, postalcode, username, password, ClientStatus.REGISTERED)
 
             clients.add(client)
 
@@ -177,7 +177,7 @@ class clientService {
                    }
 
                    4 -> {
-                       animalService.interactsAnimal(client, animalClients)
+                       AnimalService.interactsAnimal(client, animalClients)
                    }
 
                    5 -> {
@@ -210,7 +210,7 @@ class clientService {
                     "           > Email : ${client.clientEmail}\n" +
                     "           > Postal Code : ${client.postalCode}\n" +
                     "           > Username : ${client.username}\n")
-            if (client.status == clientStatus.ACTIVE){
+            if (client.status == ClientStatus.ACTIVE){
                 getAnimalClientList()
             }
         }
@@ -261,14 +261,14 @@ class clientService {
             Utility.printMessage("REGISTRATION REMOVAL\n\n")
             var validation = false
             for (animal in animalClients) {
-                if (animal.status != animalSituation.HEALTHY || animal.status != animalSituation.CURED) {
+                if (animal.status != AnimalSituation.HEALTHY || animal.status != AnimalSituation.CURED) {
                     validation = true
                 }
             }
             if (validation){
                 Utility.printMessage("Sorry, request impossible to fulfill.\n")
                 println("Id \t Name \t Sex \t Status\n\n")
-                for (animal in clientService.animalClients) {
+                for (animal in ClientService.animalClients) {
                     println("${animal.animalId} - ${animal.animalName} - \n" +
                             "${animal.animalSex} - ${animal.status}\n\n")
                 }

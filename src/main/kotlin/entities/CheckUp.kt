@@ -1,8 +1,8 @@
 package entities
 
-import enumerations.checkupStatus
+import enumerations.CheckupStatus
 
 data class CheckUp (
     var value : Double,
-    var status : checkupStatus
+    var status : CheckupStatus
 );

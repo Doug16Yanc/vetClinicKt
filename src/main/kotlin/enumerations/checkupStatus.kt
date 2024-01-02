@@ -1,6 +1,6 @@
 package enumerations
 
-enum class checkupStatus {
+enum class CheckupStatus {
     CONVENTIONAL,
     EMERGENCY
 }

@@ -1,6 +1,6 @@
 package enumerations
 
-enum class animalSituation {
+enum class AnimalSituation {
     STABLE,
     SERIOUS,
     CURED,

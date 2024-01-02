@@ -3,16 +3,16 @@ package services
 import entities.Animal
 import entities.Client
 import entities.Specie
-import enumerations.animalSex
-import enumerations.animalSituation
-import enumerations.clientStatus
+import enumerations.AnimalSex
+import enumerations.AnimalSituation
+import enumerations.ClientStatus
 import utils.Utility
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.random.Random
 
-class animalService {
+class AnimalService {
     companion object{
         val currentDateTime = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
@@ -25,8 +25,8 @@ class animalService {
             var help = true
 
             while (enter.toInt() != 1) {
-                for (i in 0 until clientService.animalClients.size) {
-                    if (enter == clientService.animalClients[i].animalId) {
+                for (i in 0 until ClientService.animalClients.size) {
+                    if (enter == ClientService.animalClients[i].animalId) {
                         help = false
                     }
                 }
@@ -75,11 +75,11 @@ class animalService {
                     }
 
                     6 -> {
-                        checkUpService.performCheckUp(client, animal)
+                        CheckUpService.performCheckUp(client, animal)
                     }
 
                     7 -> {
-                        clientService.interactsClient(client)
+                        ClientService.interactsClient(client)
                         break
                     }
                     else -> {
@@ -100,17 +100,17 @@ class animalService {
             println("Sex:\nM/m-Male\nF/f-Female:")
             var sexInput = sc.nextLine()
             var sex = when (sexInput.uppercase(Locale.getDefault())) {
-                "M" -> animalSex.MALE
-                "F" -> animalSex.FEMALE
-                else -> animalSex.NO_IDENTIFICATION
+                "M" -> AnimalSex.MALE
+                "F" -> AnimalSex.FEMALE
+                else -> AnimalSex.NO_IDENTIFICATION
             }
             println("Specie:")
             var specie = sc.nextLine()
 
-            client.status = clientStatus.ACTIVE
+            client.status = ClientStatus.ACTIVE
 
-            val animal = Animal(client, id, name, age, sex, Specie(specie), animalSituation.HEALTHY)
-            clientService.animalClients.add(animal)
+            val animal = Animal(client, id, name, age, sex, Specie(specie), AnimalSituation.HEALTHY)
+            ClientService.animalClients.add(animal)
             proofAnimalRecord(client, animal)
         }
         fun proofAnimalRecord(client: Client, animal : Animal){
@@ -139,7 +139,7 @@ class animalService {
             println("Enter animal id:")
             var id = sc.nextInt()
 
-            val foundAnimal = clientService.animalClients.find {it.animalId == id}
+            val foundAnimal = ClientService.animalClients.find {it.animalId == id}
 
             if (foundAnimal != null) {
                 println(
@@ -147,7 +147,7 @@ class animalService {
                             "N/n - Name :\n" +
                             "A/a - Age :\n"
                 )
-                var option = clientService.sc.nextLine()
+                var option = ClientService.sc.nextLine()
                 when (option.lowercase(Locale.getDefault())) {
                     "a" -> {
                         println("New name:")
@@ -177,12 +177,12 @@ class animalService {
             println("Enter id animal:")
             var id = sc.nextInt()
 
-            val foundAnimal = clientService.animalClients.find {it.animalId == id}
+            val foundAnimal = ClientService.animalClients.find {it.animalId == id}
 
             if (foundAnimal != null) {
-                if (foundAnimal.status == animalSituation.HEALTHY || foundAnimal.status == animalSituation.CURED){
+                if (foundAnimal.status == AnimalSituation.HEALTHY || foundAnimal.status == AnimalSituation.CURED){
                     Utility.printMessage("Removal successfully!\n")
-                    clientService.animalClients.remove(foundAnimal)
+                    ClientService.animalClients.remove(foundAnimal)
                 }
                 else {
                     Utility.printMessage("Sorry, but your pet is not in a position to have its registration removed.\n")
@@ -197,7 +197,7 @@ class animalService {
             println("Enter id animal:")
             var id = sc.nextInt()
 
-            val foundAnimal = clientService.animalClients.find {it.animalId == id}
+            val foundAnimal = ClientService.animalClients.find {it.animalId == id}
 
             if (foundAnimal != null){
                 Utility.printMessage("      > Id of animal : ${foundAnimal.animalId}\n" +
@@ -213,7 +213,7 @@ class animalService {
         }
         fun listAnimals(){
             Utility.printMessage("LIST OF YOUR ANIMALS:")
-            clientService.getAnimalClientList()
+            ClientService.getAnimalClientList()
         }
     }
 }

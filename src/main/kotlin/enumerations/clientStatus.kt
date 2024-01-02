@@ -1,6 +1,6 @@
 package enumerations
 
-enum class clientStatus {
+enum class ClientStatus {
     REGISTERED,
     ACTIVE
 }
